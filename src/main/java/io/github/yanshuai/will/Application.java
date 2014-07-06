@@ -24,5 +24,5 @@ public class Application implements EmbeddedServletContainerCustomizer {
         container.setPort(PORT);
     }
 
-    private static final int PORT = 80;
+    private static final int PORT = 8880;
 }
