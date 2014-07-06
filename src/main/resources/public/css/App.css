@@ -928,7 +928,7 @@ label {
   display: block;
   width: 12px;
   height: 12px;
-  background: url('../js/plugins/chosen/chosen-sprite.png') -42px 1px no-repeat;
+  background: url('../img/plugins/chosen/chosen-sprite.png') -42px 1px no-repeat;
   font-size: 1px;
 }
 .chosen-container-single .chosen-single abbr:hover {
@@ -1113,7 +1113,7 @@ label {
   display: block;
   width: 12px;
   height: 12px;
-  background: url('../js/plugins/chosen/chosen-sprite.png') -42px 1px no-repeat;
+  background: url('../img/plugins/chosen/chosen-sprite.png') -42px 1px no-repeat;
   font-size: 1px;
 }
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
@@ -1246,12 +1246,12 @@ label {
 }
 .chosen-rtl .chosen-search input[type="text"] {
   padding: 4px 5px 4px 20px;
-  background: #ffffff url('../js/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px;
-  background: url('../js/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background: url('../js/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: url('../js/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: url('../js/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: url('../js/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: #ffffff url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px;
+  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   direction: rtl;
 }
 .chosen-rtl.chosen-container-single .chosen-single div b {
@@ -2489,19 +2489,19 @@ table.table thead .sorting_desc_disabled {
   *cursor: hand;
 }
 table.table thead .sorting {
-  background: url('../js/plugins/datatables/img/sort_both.png') no-repeat center right;
+  background: url('../img/plugins/datatables/img/sort_both.png') no-repeat center right;
 }
 table.table thead .sorting_asc {
-  background: url('../js/plugins/datatables/img/sort_asc.png') no-repeat center right;
+  background: url('../img/plugins/datatables/img/sort_asc.png') no-repeat center right;
 }
 table.table thead .sorting_desc {
-  background: url('../js/plugins/datatables/img/sort_desc.png') no-repeat center right;
+  background: url('../img/plugins/datatables/img/sort_desc.png') no-repeat center right;
 }
 table.table thead .sorting_asc_disabled {
-  background: url('../js/plugins/datatables/img/sort_asc_disabled.png') no-repeat center right;
+  background: url('../img/plugins/datatables/img/sort_asc_disabled.png') no-repeat center right;
 }
 table.table thead .sorting_desc_disabled {
-  background: url('../js/plugins/datatables/img/sort_desc_disabled.png') no-repeat center right;
+  background: url('../img/plugins/datatables/img/sort_desc_disabled.png') no-repeat center right;
 }
 table.dataTable th:active {
   outline: none;
