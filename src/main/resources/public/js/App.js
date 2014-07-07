@@ -83,7 +83,6 @@ var App = function() {
   function initFormValidation() {
     if ($.fn.parsley) {
       $('.parsley-form').each(function() {
-        console.log($(this))
         $(this).parsley({
           trigger: 'change',
           errors: {

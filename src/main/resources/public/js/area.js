@@ -1,13 +1,9 @@
 $(function() {
-
   if (!$('#area-chart').length) {
     return false;
   }
-
   area();
-
   $(window).resize(App.debounce(area, 250));
-
 });
 
 function area() {
