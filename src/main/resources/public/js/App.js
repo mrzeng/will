@@ -234,8 +234,8 @@ var App = function() {
       $('[data-provide="datatable"]').each(function() {
         $(this).addClass('dataTable-helper');
         var defaultOptions = {
-          paginate: false,
-          search: false,
+          paginate: true,
+          search: true,
           info: false,
           lengthChange: false,
           displayRows: 10
