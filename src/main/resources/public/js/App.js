@@ -231,13 +231,13 @@ var App = function() {
 
   function initDataTableHelper() {
     if ($.fn.dataTable) {
-      $('[data-provide="datatable"]').each(function() {
+      $('#orders').each(function() {
         $(this).addClass('dataTable-helper');
         var defaultOptions = {
           paginate: true,
           search: true,
           info: false,
-          lengthChange: false,
+          lengthChange: true,
           displayRows: 10
         },
         dataOptions = $(this).data(),
@@ -251,6 +251,10 @@ var App = function() {
         tableConfig.bPaginate = false;
         tableConfig.bLengthChange = false;
         tableConfig.bInfo = false;
+        tableConfig.bProcessing = true;
+        tableConfig.bServerSide = true;
+        tableConfig.sAjaxSource = $(this).find('[data-provide]').val();
+        tableConfig.fnServerData = loadOrdersFromServer;
 
         if (helperOptions.paginate) {
           tableConfig.bPaginate = true;
@@ -316,6 +320,19 @@ var App = function() {
       $('.dataTables_filter input').prop('placeholder', 'Search...');
     }
   }
+
+  var loadOrdersFromServer = function(sSource, aoData, fnCallback) {
+    var data = {};
+    $.ajax({
+      type: 'GET',
+      url: sSource,
+      dataType: 'json',
+      data: data,
+      success: function(data) {
+        fnCallback(data);
+      }
+    });
+  };
 
   function debounce(func, wait, immediate) {
     var timeout, args, context, timestamp, result;
@@ -389,3 +406,4 @@ var Nav = function() {
 $(function() {
   App.init();
 });
+
