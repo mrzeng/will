@@ -236,7 +236,7 @@ var App = function() {
         var defaultOptions = {
           paginate: true,
           search: true,
-          info: false,
+          info: true,
           lengthChange: true,
           displayRows: 10
         },
@@ -251,10 +251,52 @@ var App = function() {
         tableConfig.bPaginate = false;
         tableConfig.bLengthChange = false;
         tableConfig.bInfo = false;
-        tableConfig.bProcessing = true;
+        tableConfig.bProcessing = false;
+        tableConfig.bStateSave = true;
         tableConfig.bServerSide = true;
-        tableConfig.sAjaxSource = $(this).find('[data-provide]').val();
-        tableConfig.fnServerData = loadOrdersFromServer;
+        tableConfig.sAjaxSource = "api/orders";
+        tableConfig.oLanguage = {
+          "sLengthMenu": "每页显示 _MENU_ 条记录",
+          "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+          "sInfoEmpty": "没有数据",
+          "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+          "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "前一页",
+            "sNext": "后一页",
+            "sLast": "尾页"
+          },
+          "sZeroRecords": "没有检索到数据",
+          "sProcessing": "<img src='./loading.gif' />"
+        };
+        tableConfig.fnServerData = function(sSource, aoData, fnCallback) {
+          $.ajax({
+            type: 'GET',
+            url: sSource,
+            dataType: 'json',
+            data: aoData,
+            success: function(data) {
+              if (!data.isError) {
+                fnCallback(data.data);
+              }
+            }
+          });
+        };
+        tableConfig.fnRowCallback = function(nRow, aData, iDisplayIndex) {
+          $('td:eq(0)', nRow).html('<input class="icheck-input" type="checkbox" value="' + aData[1] + '">');
+          if ('Pending' === aData[3]) {
+            $('td:eq(3)', nRow).html('<span class="label label-default">Pending</span>');
+          } else if ('Approved' === aData[3]) {
+            $('td:eq(3)', nRow).html('<span class="label label-success">Approved</span>');
+          }
+          $('td:eq(4)', nRow).html('<a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">\
+            <i class="fa fa-check"></i>\
+          </a>');
+          return nRow;
+        };
+        tableConfig.fnDrawCallback = function(oInstance, oSettings, json) {
+          initICheck();
+        };
 
         if (helperOptions.paginate) {
           tableConfig.bPaginate = true;
@@ -320,19 +362,6 @@ var App = function() {
       $('.dataTables_filter input').prop('placeholder', 'Search...');
     }
   }
-
-  var loadOrdersFromServer = function(sSource, aoData, fnCallback) {
-    var data = {};
-    $.ajax({
-      type: 'GET',
-      url: sSource,
-      dataType: 'json',
-      data: data,
-      success: function(data) {
-        fnCallback(data);
-      }
-    });
-  };
 
   function debounce(func, wait, immediate) {
     var timeout, args, context, timestamp, result;
