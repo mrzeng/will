@@ -26,4 +26,6 @@
   <bean id="orderBo" class="io.github.yanshuai.will.bo.OrderBo">
   </bean>
   <!-- dao: data acess object -->
+  <bean id="orderDao" class="io.github.yanshuai.will.dao.OrderDao">
+  </bean>
 </beans>

@@ -6,6 +6,8 @@
 
 package io.github.yanshuai.will.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -40,4 +42,14 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String[] toJDataRow() {
+        String[] data = new String[5];
+        data[1] = String.valueOf(this.getId());
+        data[2] = df.format(this.getDate());
+        data[3] = this.getStatus();
+        return data;
+    }
+
+    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 }
