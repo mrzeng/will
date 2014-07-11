@@ -23,6 +23,7 @@
   </mvc:interceptors>
 
   <!-- bo: business object -->
-
+  <bean id="orderBo" class="io.github.yanshuai.will.bo.OrderBo">
+  </bean>
   <!-- dao: data acess object -->
 </beans>
