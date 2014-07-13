@@ -86,7 +86,8 @@ var App = function() {
             firstDay: 0
           },
           startDate: moment().subtract('days', 1),
-          endDate: moment()
+          endDate: moment(),
+          maxDate: moment()
         },
         function(start, end) {
           $('#date-range span').html(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
