@@ -445,14 +445,25 @@ $(function() {
 $('#date-range').daterangepicker(
     {
       ranges: {
-         'Today': [moment(), moment()],
-         'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-         'Last 7 Days': [moment().subtract('days', 6), moment()],
-         'Last 30 Days': [moment().subtract('days', 29), moment()],
-         'This Month': [moment().startOf('month'), moment().endOf('month')],
-         'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+         '今日': [moment(), moment()],
+         '昨日': [moment().subtract('days', 1), moment().subtract('days', 1)],
+         '本周': [moment().subtract('days', 6), moment()],
+         '过去30天': [moment().subtract('days', 29), moment()],
+         '本月': [moment().startOf('month'), moment().endOf('month')],
+         '上个月': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
       },
-      startDate: moment().subtract('days', 29),
+      locale: {
+        applyLabel: '确认',
+        cancelLabel: '取消',
+        fromLabel: '起始日期',
+        toLabel: '结束日期',
+        weekLabel: 'W',
+        customRangeLabel: '自定义日期范围',
+        daysOfWeek: moment()._lang._weekdaysMin.slice(),
+        monthNames: moment()._lang._monthsShort.slice(),
+        firstDay: 0
+      },
+      startDate: moment().subtract('days', 1),
       endDate: moment()
     },
     function(start, end) {
