@@ -3435,6 +3435,12 @@ ul.support-list li {
   
 }
 
-#date-range {
-  width: 160px;
+.selectbox {
+  background: #ffffff;
+  color: #333333;
+  padding: 8px;
+  line-height: 18px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }

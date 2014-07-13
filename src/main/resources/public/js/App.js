@@ -8,6 +8,7 @@ var App = function() {
 
   function init() {
     initLayout();
+    initDatePicker();
 
     initICheck();
     initSelect2();
@@ -19,8 +20,6 @@ var App = function() {
 
     initFormValidation();
     initTooltips();
-    initDatepicker();
-    initTimepicker();
     initColorpicker();
     initAutosize();
 
@@ -59,6 +58,40 @@ var App = function() {
             }
           });
     }
+  }
+
+  function initDatePicker() {
+    $('#date-range span').html(moment().subtract('days', 1).format('MM/DD/YYYY')
+        + ' ~ ' + moment().format('MM/DD/YYYY'));
+    $('#date-range').daterangepicker(
+        {
+          ranges: {
+            '今日': [moment(), moment()],
+            '昨日': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            '本周': [moment().subtract('days', 6), moment()],
+            '过去30天': [moment().subtract('days', 29), moment()],
+            '本月': [moment().startOf('month'), moment().endOf('month')],
+            '上个月': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+          },
+          opens: 'left',
+          locale: {
+            applyLabel: '确认',
+            cancelLabel: '取消',
+            fromLabel: '起始日期',
+            toLabel: '结束日期',
+            weekLabel: 'W',
+            customRangeLabel: '自定义日期范围',
+            daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+            monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            firstDay: 0
+          },
+          startDate: moment().subtract('days', 1),
+          endDate: moment()
+        },
+        function(start, end) {
+          $('#date-range span').html(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
+        }
+    );
   }
 
   function initAutosize() {
@@ -152,28 +185,6 @@ var App = function() {
   function initSelect2() {
     if ($.fn.select2) {
       $('.ui-select2').select2({allowClear: true, placeholder: "Select..."});
-    }
-  }
-
-  function initDatepicker() {
-    if ($.fn.datepicker) {
-      $('.ui-datepicker').datepicker({autoclose: true});
-    }
-  }
-
-  function initTimepicker() {
-    if ($.fn.timepicker) {
-      var pickers = $('.ui-timepicker, .ui-timepicker-modal');
-
-      pickers.each(function() {
-        $(this).parent('.input-group').addClass('bootstrap-timepicker');
-
-        if ($(this).is('.ui-timepicker')) {
-          $(this).timepicker();
-        } else {
-          $(this).timepicker({template: 'modal'});
-        }
-      });
     }
   }
 
@@ -441,32 +452,3 @@ var Nav = function() {
 $(function() {
   App.init();
 });
-
-$('#date-range').daterangepicker(
-    {
-      ranges: {
-         '今日': [moment(), moment()],
-         '昨日': [moment().subtract('days', 1), moment().subtract('days', 1)],
-         '本周': [moment().subtract('days', 6), moment()],
-         '过去30天': [moment().subtract('days', 29), moment()],
-         '本月': [moment().startOf('month'), moment().endOf('month')],
-         '上个月': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-      },
-      locale: {
-        applyLabel: '确认',
-        cancelLabel: '取消',
-        fromLabel: '起始日期',
-        toLabel: '结束日期',
-        weekLabel: 'W',
-        customRangeLabel: '自定义日期范围',
-        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
-        monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        firstDay: 0
-      },
-      startDate: moment().subtract('days', 1),
-      endDate: moment()
-    },
-    function(start, end) {
-      $('#date-range').val(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
-    }
-);
