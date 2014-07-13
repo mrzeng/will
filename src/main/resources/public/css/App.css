@@ -3434,3 +3434,7 @@ ul.support-list li {
 @media (min-width: 1200px) {
   
 }
+
+#date-range {
+  width: 160px;
+}

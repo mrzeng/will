@@ -8,7 +8,8 @@
     <title>Will</title>
 
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/daterangepicker/daterangepicker-bs3.css" />
     <link rel="stylesheet" href="assets/jquery/jquery-ui-1.9.2.custom.css" type="text/css">
     <link rel="stylesheet" href="css/blue.css" type="text/css">
     <link rel="stylesheet" href="assets/select2/select2.css" type="text/css">
@@ -286,7 +287,7 @@
               </ul>
             </li>
 
-            <li>
+            <li class="dropdown">
               <a href="javascript:;">
                 <i class="fa fa-table"></i>
                 Tables
@@ -638,10 +639,11 @@
 
                   <ul class="portlet-tools pull-right">
                     <li>
-                      <button class="btn btn-default">
-                        &#x5237;&#x65b0;
+                      <button id="btn-refresh" class="btn btn-default btn-sm">
+                        <span class="fa fa-refresh"></span> &#x5237;&#x65b0;
                       </button>
                     </li>
+                    <!--
                     <li>
                       <select id="apply-selected" name="table-select" class="ui-select2">
                         <option value="">Select Action</option>
@@ -650,13 +652,22 @@
                         <option value="delete">Delete</option>
                       </select>
                     </li>
+                    -->
+                    <li>
+                      <div class="input-group" style="display: inline-block">
+                        <span class="input-group-addon" style="display: inline">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                        <input type="text" id="date-range" />
+                      </div>
+                    </li>
                   </ul>
                 </div>
 
                 <div class="portlet-content">
                   <div class="table-responsive">
                     <table id="orders" class="table table-striped table-bordered
-                           table-hover table-highlight table-checkable dataTable-helper dataTable datatable-columnfilter">
+                           table-hover table-highlight table-checkable dataTable">
                       <thead>
                         <tr>
                           <th class="checkbox-column">
@@ -670,101 +681,6 @@
                       </thead>
 
                       <tbody>
-                        <tr>
-                          <td class="checkbox-column">
-                            <input class="icheck-input" type="checkbox" value="actiony">
-                          </td>
-                          <td>Joey</td>
-                          <td>Greyson</td>
-                          <td>
-                            <span class="label label-success">Approved</span>
-                          </td>
-                          <td class="align-center">
-                            <a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">
-                              <i class="fa fa-check"></i>
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="checkbox-column">
-                            <input class="icheck-input" type="checkbox" value="wolf">  
-                          </td>
-                          <td class="hidden-xs">Wolf</td>
-                          <td>Bud</td>
-                          <td>
-                            <span class="label label-default">Pending</span>
-                          </td>
-                          <td class="align-center">
-                            <a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">
-                              <i class="fa fa-check"></i>
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="checkbox-column">
-                           <input class="icheck-input" type="checkbox" value="sam">
-                          </td>
-                          <td class="hidden-xs">Sam</td>
-                          <td>Mitchell</td>
-                          <td>
-                            <span class="label label-success">Approved</span>
-                          </td>
-                          <td class="align-center">
-                            <a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">
-                              <i class="fa fa-check"></i>
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="checkbox-column">
-                            <input class="icheck-input" type="checkbox" value="carlos">
-                          </td>
-                          <td class="hidden-xs">Carlos</td>
-                          <td>Lopez</td>
-                          <td>
-                            <span class="label label-success">Approved</span>
-                          </td>
-                          <td class="align-center">
-                            <a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">
-                              <i class="fa fa-check"></i>
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="checkbox-column">
-                            <input class="icheck-input" type="checkbox" value="rob">
-                          </td>
-                          <td class="hidden-xs">Rob</td>
-                          <td>Johnson</td>
-                          <td>
-                            <span class="label label-default">Pending</span>
-                          </td>
-                          <td class="align-center">
-                            <a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">
-                              <i class="fa fa-check"></i>
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="checkbox-column">
-                            <input class="icheck-input" type="checkbox" value="mike">
-                          </td>
-                          <td class="hidden-xs">Mike</td>
-                          <td>Jones</td>
-                          <td>
-                            <span class="label label-default">Pending</span>
-                          </td>
-                          <td class="align-center">
-                            <a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">
-                              <i class="fa fa-check"></i>
-                            </a>
-                          </td>
-                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -925,7 +841,9 @@
 
     <script src="assets/jquery/jquery-1.9.1.min.js"></script>
     <script src="assets/jquery/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="assets/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/moment/moment.min.js"></script>
+    <script src="assets/daterangepicker/daterangepicker.js"></script>
     <script src="assets/jquery/jquery.icheck.min.js"></script>
     <script src="assets/select2/select2.js"></script>
     <script src="assets/jquery/jquery.dataTables.min.js"></script>
