@@ -459,14 +459,14 @@ $('#date-range').daterangepicker(
         toLabel: '结束日期',
         weekLabel: 'W',
         customRangeLabel: '自定义日期范围',
-        daysOfWeek: moment()._lang._weekdaysMin.slice(),
-        monthNames: moment()._lang._monthsShort.slice(),
+        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+        monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
         firstDay: 0
       },
       startDate: moment().subtract('days', 1),
       endDate: moment()
     },
     function(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      $('#date-range').val(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
     }
 );
