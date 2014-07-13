@@ -2,27 +2,15 @@ var App = function() {
   "use strict";
 
   var $thisTable;
-  var chartColors = ['#e5412d', '#f0ad4e', '#444', '#888', '#555', '#999', '#bbb', '#ccc', '#eee'];
 
-  return {init: init, chartColors: chartColors, debounce: debounce};
+  return {init: init};
 
   function init() {
     initLayout();
     initDatePicker();
 
-    initICheck();
-    initSelect2();
     initTableCheckable();
-
-    initLightbox();
-    initEnhancedAccordion();
     initDataTableHelper();
-
-    initFormValidation();
-    initTooltips();
-    initColorpicker();
-    initAutosize();
-
     initBackToTop();
     $('#btn-refresh').bind('click', refreshDataTable);
   }
@@ -33,9 +21,6 @@ var App = function() {
   }
 
   function initLayout() {
-    $('#site-logo').prependTo('#wrapper');
-    $('html').removeClass('no-js');
-
     Nav.init();
 
     $('body').on('touchstart.dropdown', '.dropdown-menu', function(e) {
@@ -93,133 +78,6 @@ var App = function() {
           $('#date-range span').html(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
         }
     );
-  }
-
-  function initAutosize() {
-    if ($.fn.autosize) {
-      $('.ui-textarea-autosize').each(function() {
-        if ($(this).data('animate')) {
-          $(this).addClass('autosize-animate').autosize();
-        } else {
-          $(this).autosize();
-        }
-      });
-    }
-  }
-
-  function initEnhancedAccordion() {
-    $('.accordion .accordion-toggle').on('click', function(e) {
-      $(e.target).parent().parent().parent().addClass('open');
-    });
-
-    $('.accordion .accordion-toggle').on('click', function(e) {
-      $(this).parents('.panel').siblings().removeClass('open');
-    });
-
-    $('.accordion').each(function() {
-      $(this).find('.panel-collapse.in').parent().addClass('open');
-    });
-  }
-
-  function initFormValidation() {
-    if ($.fn.parsley) {
-      $('.parsley-form').each(function() {
-        $(this).parsley({
-          trigger: 'change',
-          errors: {
-            container: function(element, isRadioOrCheckbox) {
-              if (element.parents('form').is('.form-horizontal')) {
-                return element.parents("*[class^='col-']");
-              }
-
-              return element.parents('.form-group');
-            }
-          }
-        });
-      });
-    }
-  }
-
-  function initLightbox() {
-    if ($.fn.magnificPopup) {
-      $('.ui-lightbox').magnificPopup({
-        type: 'image',
-        closeOnContentClick: false,
-        closeBtnInside: true,
-        fixedContentPos: true,
-        mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
-        image: {
-          verticalFit: true,
-          tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
-        }
-      });
-
-      $('.ui-lightbox-video, .ui-lightbox-iframe').magnificPopup({
-        disableOn: 700,
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
-        fixedContentPos: false
-      });
-
-      $('.ui-lightbox-gallery').magnificPopup({
-        delegate: 'a',
-        type: 'image',
-        tLoading: 'Loading image #%curr%...',
-        mainClass: 'mfp-img-mobile',
-        gallery: {
-          enabled: true,
-          navigateByImgClick: true,
-          preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
-        },
-        image: {
-          tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-          titleSrc: function(item) {
-            return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
-          }
-        }
-      });
-    }
-  }
-
-  function initSelect2() {
-    if ($.fn.select2) {
-      $('.ui-select2').select2({allowClear: true, placeholder: "Select..."});
-    }
-  }
-
-  function initColorpicker() {
-    if ($.fn.simplecolorpicker) {
-      $('.ui-colorpicker').each(function(i) {
-        var picker = $(this).data('picker');
-
-        $(this).simplecolorpicker({
-          picker: picker
-        });
-      });
-    }
-  }
-
-  function initTooltips() {
-    if ($.fn.tooltip) {
-      $('.ui-tooltip').tooltip();
-    }
-    if ($.fn.popover) {
-      $('.ui-popover').popover({container: 'body'});
-    }
-  }
-
-  function initICheck() {
-    if ($.fn.iCheck) {
-      $('.icheck-input').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue',
-        inheritClass: true
-      }).on('ifChanged', function(e) {
-        $(e.currentTarget).trigger('change');
-      });
-    }
   }
 
   function initBackToTop() {
@@ -313,7 +171,13 @@ var App = function() {
           return nRow;
         };
         tableConfig.fnDrawCallback = function(oInstance, oSettings, json) {
-          initICheck();
+          $('.icheck-input').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue',
+            inheritClass: true
+          }).on('ifChanged', function(e) {
+            $(e.currentTarget).trigger('change');
+          });
         };
 
         if (helperOptions.paginate) {
@@ -380,75 +244,7 @@ var App = function() {
       $('.dataTables_filter input').prop('placeholder', 'Search...');
     }
   }
-
-  function debounce(func, wait, immediate) {
-    var timeout, args, context, timestamp, result;
-    return function() {
-      context = this;
-      args = arguments;
-      timestamp = new Date();
-
-      var later = function() {
-        var last = (new Date()) - timestamp;
-
-        if (last < wait) {
-          timeout = setTimeout(later, wait - last);
-        } else {
-          timeout = null;
-          if (!immediate)
-            result = func.apply(context, args);
-        }
-      };
-
-      var callNow = immediate && !timeout;
-
-      if (!timeout) {
-        timeout = setTimeout(later, wait);
-      }
-
-      if (callNow)
-        result = func.apply(context, args);
-      return result;
-    };
-  }
 }();
-
-
-
-var Nav = function() {
-
-  return {init: init};
-
-  function init() {
-    var mainnav = $('#main-nav'),
-        openActive = mainnav.is('.open-active'),
-        navActive = mainnav.find('> .active');
-
-    mainnav.find('> .dropdown > a').bind('click', navClick);
-
-    if (openActive && navActive.is('.dropdown')) {
-      navActive.addClass('opened').find('.sub-nav').show();
-    }
-  }
-
-  function navClick(e) {
-    e.preventDefault();
-
-    var li = $(this).parents('li');
-
-    if (li.is('.opened')) {
-      closeAll();
-    } else {
-      closeAll();
-      li.addClass('opened').find('.sub-nav').slideDown();
-    }
-  }
-
-  function closeAll() {
-    $('.sub-nav').slideUp().parents('li').removeClass('opened');
-  }
-}();
-
 
 $(function() {
   App.init();
