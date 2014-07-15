@@ -1,7 +1,7 @@
 var App = function() {
   "use strict";
 
-  var $thisTable;
+  var $orderDataTable;
 
   return {init: init};
 
@@ -10,14 +10,8 @@ var App = function() {
     initDatePicker();
 
     initTableCheckable();
-    initDataTableHelper();
+    initOrderTable();
     initBackToTop();
-    $('#btn-refresh').bind('click', refreshDataTable);
-  }
-
-  function refreshDataTable() {
-    $thisTable.fnClearTable(0);
-    $thisTable.fnDraw();
   }
 
   function initLayout() {
@@ -25,6 +19,11 @@ var App = function() {
 
     $('body').on('touchstart.dropdown', '.dropdown-menu', function(e) {
       e.stopPropagation();
+    });
+
+    $('body').on('click', '#btn-refresh', function(e) {
+      $orderDataTable.fnClearTable(0);
+      $orderDataTable.fnDraw();
     });
   }
 
@@ -74,18 +73,15 @@ var App = function() {
           endDate: moment(),
           maxDate: moment()
         },
-        function(start, end) {
-          $('#date-range span').html(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
-        }
+    function(start, end) {
+      $('#date-range span').html(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
+    }
     );
   }
 
   function initBackToTop() {
     var backToTop = $('<a>', {id: 'back-to-top', href: '#top'});
-    var icon = $('<i>', {class: 'fa fa-chevron-up'});
-
     backToTop.appendTo('body');
-    icon.appendTo(backToTop);
 
     backToTop.hide();
 
@@ -106,143 +102,111 @@ var App = function() {
     });
   }
 
-  function initDataTableHelper() {
-    if ($.fn.dataTable) {
-      $('#orders').each(function() {
-        $(this).addClass('dataTable-helper');
-        var defaultOptions = {
-          paginate: true,
-          search: true,
-          info: true,
-          lengthChange: true,
-          displayRows: 10
-        },
-        dataOptions = $(this).data(),
-            helperOptions = $.extend(defaultOptions, dataOptions),
-            tableConfig = {};
-
-        tableConfig.iDisplayLength = helperOptions.displayRows;
-        tableConfig.bFilter = true;
-        tableConfig.bSort = true;
-        tableConfig.bPaginate = false;
-        tableConfig.bLengthChange = false;
-        tableConfig.bInfo = false;
-        tableConfig.bProcessing = false;
-        tableConfig.bStateSave = true;
-        tableConfig.bServerSide = true;
-        tableConfig.sAjaxSource = "api/orders";
-        tableConfig.oLanguage = {
-          "sLengthMenu": "每页显示 _MENU_ 条记录",
-          "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-          "sInfoEmpty": "没有数据",
-          "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-          "oPaginate": {
-            "sFirst": "首页",
-            "sPrevious": "前一页",
-            "sNext": "后一页",
-            "sLast": "尾页"
-          },
-          "sZeroRecords": "没有检索到数据",
-          "sProcessing": "<img src='./loading.gif' />"
-        };
-        tableConfig.fnServerData = function(sSource, aoData, fnCallback) {
-          $.ajax({
-            type: 'GET',
-            url: sSource,
-            dataType: 'json',
-            data: aoData,
-            success: function(data) {
-              if (!data.isError) {
-                fnCallback(data.data);
-              }
-            }
-          });
-        };
-        tableConfig.fnRowCallback = function(nRow, aData, iDisplayIndex) {
-          $('td:eq(0)', nRow).html('<input class="icheck-input" type="checkbox" value="' + aData[1] + '">');
-          if ('Pending' === aData[3]) {
-            $('td:eq(3)', nRow).html('<span class="label label-default">Pending</span>');
-          } else if ('Approved' === aData[3]) {
-            $('td:eq(3)', nRow).html('<span class="label label-success">Approved</span>');
+  function initOrderTable() {
+    var $orderTable = $('#orderTable');
+    var tableConfig = {};
+    tableConfig.iDisplayLength = 10;
+    tableConfig.bFilter = true;
+    tableConfig.bSort = true;
+    tableConfig.bPaginate = true;
+    tableConfig.bLengthChange = true;
+    tableConfig.bInfo = true;
+    tableConfig.bProcessing = false;
+    tableConfig.bStateSave = true;
+    tableConfig.bServerSide = true;
+    tableConfig.sAjaxSource = "api/orders";
+    tableConfig.oLanguage = {
+      "sLengthMenu": "每页显示 _MENU_ 条记录",
+      "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+      "sInfoEmpty": "没有数据",
+      "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+      "oPaginate": {
+        "sFirst": "首页",
+        "sPrevious": "前一页",
+        "sNext": "后一页",
+        "sLast": "尾页"
+      },
+      "sZeroRecords": "没有检索到数据",
+      "sProcessing": "<img src='./loading.gif' />"
+    };
+    tableConfig.fnServerData = function(sSource, aoData, fnCallback) {
+      $.ajax({
+        type: 'GET',
+        url: sSource,
+        dataType: 'json',
+        data: aoData,
+        success: function(data) {
+          if (!data.isError) {
+            fnCallback(data.data);
           }
-          $('td:eq(4)', nRow).html('<a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">\
-            <i class="fa fa-check"></i>\
-          </a>');
-          return nRow;
-        };
-        tableConfig.fnDrawCallback = function(oInstance, oSettings, json) {
-          $('.icheck-input').iCheck({
-            checkboxClass: 'icheckbox_minimal-blue',
-            radioClass: 'iradio_minimal-blue',
-            inheritClass: true
-          }).on('ifChanged', function(e) {
-            $(e.currentTarget).trigger('change');
-          });
-        };
-
-        if (helperOptions.paginate) {
-          tableConfig.bPaginate = true;
-        }
-        if (helperOptions.lengthChange) {
-          tableConfig.bLengthChange = true;
-        }
-        if (helperOptions.info) {
-          tableConfig.bInfo = true;
-        }
-        if (helperOptions.search) {
-          $(this).parent().removeClass('datatable-hidesearch');
-        }
-
-        tableConfig.aaSorting = [];
-        tableConfig.aoColumns = [];
-
-        $(this).find('thead tr th').each(function(index, value) {
-          var sortable = ($(this).data('sortable') === true) ? true : false;
-          tableConfig.aoColumns.push({'bSortable': sortable});
-
-          if ($(this).data('direction')) {
-            tableConfig.aaSorting.push([index, $(this).data('direction')]);
-          }
-        });
-
-        // Create the datatable
-        $thisTable = $(this).dataTable(tableConfig);
-
-        if (!helperOptions.search) {
-          $thisTable.parent().find('.dataTables_filter').remove();
-        }
-
-        var filterableCols = $thisTable.find('thead th').filter('[data-filterable="true"]');
-
-        if (filterableCols.length > 0) {
-          var columns = $thisTable.fnSettings().aoColumns,
-              $row, th, $col, showFilter;
-
-          $row = $('<tr>', {cls: 'dataTable-filter-row'}).appendTo($thisTable.find('thead'));
-
-          for (var i = 0; i < columns.length; i++) {
-            $col = $(columns[i].nTh.outerHTML);
-            showFilter = ($col.data('filterable') === true) ? 'show' : 'hide';
-
-            th = '<th class="' + $col.prop('class') + '">';
-            th += '<input type="text" class="form-control input-sm ' + showFilter + '" placeholder="' + $col.text() + '">';
-            th += '</th>';
-            $row.append(th);
-          }
-
-          $row.find('th').removeClass('sorting sorting_disabled sorting_asc sorting_desc sorting_asc_disabled sorting_desc_disabled');
-
-          $thisTable.find('thead input').keyup(function() {
-            $thisTable.fnFilter(this.value, $thisTable.oApi._fnVisibleToColumnIndex(
-                $thisTable.fnSettings(), $thisTable.find('thead input[type=text]').index(this)));
-          });
-
-          $thisTable.addClass('datatable-columnfilter');
         }
       });
+    };
+    tableConfig.fnRowCallback = function(nRow, aData, iDisplayIndex) {
+      $('td:eq(0)', nRow).html('<input class="icheck-input" type="checkbox" value="' + aData[1] + '">');
+      if ('Pending' === aData[3]) {
+        $('td:eq(3)', nRow).html('<span class="label label-default">Pending</span>');
+      } else if ('Approved' === aData[3]) {
+        $('td:eq(3)', nRow).html('<span class="label label-success">Approved</span>');
+      }
+      $('td:eq(4)', nRow).html('<a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">\
+            <i class="fa fa-check"></i>\
+          </a>');
+      return nRow;
+    };
+    tableConfig.fnDrawCallback = function(oInstance, oSettings, json) {
+      $('.icheck-input').iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_minimal-blue',
+        inheritClass: true
+      }).on('ifChanged', function(e) {
+        $(e.currentTarget).trigger('change');
+      });
+    };
 
-      $('.dataTables_filter input').prop('placeholder', 'Search...');
+    tableConfig.aaSorting = [];
+    tableConfig.aoColumns = [];
+
+    $orderTable.find('thead tr th').each(function(index, value) {
+      var sortable = ($orderTable.data('sortable') === true) ? true : false;
+      tableConfig.aoColumns.push({'bSortable': sortable});
+
+      if ($orderTable.data('direction')) {
+        tableConfig.aaSorting.push([index, $(this).data('direction')]);
+      }
+    });
+
+    // Create the datatable
+    $orderDataTable = $orderTable.dataTable(tableConfig);
+    var filterableCols = $orderDataTable.find('thead th').filter('[data-filterable="true"]');
+
+    if (filterableCols.length > 0) {
+      var columns = $orderDataTable.fnSettings().aoColumns,
+          $row, th, $col, showFilter;
+
+      $row = $('<tr>', {cls: 'dataTable-filter-row'}).appendTo($orderDataTable.find('thead'));
+
+      for (var i = 0; i < columns.length; i++) {
+        $col = $(columns[i].nTh.outerHTML);
+        showFilter = ($col.data('filterable') === true) ? 'show' : 'hide';
+
+        th = '<th class="' + $col.prop('class') + '">';
+        th += '<input type="text" class="form-control input-sm ' + showFilter + '" placeholder="' + $col.text() + '">';
+        th += '</th>';
+        $row.append(th);
+      }
+
+      $row.find('th').removeClass('sorting sorting_disabled sorting_asc sorting_desc sorting_asc_disabled sorting_desc_disabled');
+
+      $orderDataTable.find('thead input').keyup(function() {
+        $orderDataTable.fnFilter(this.value, $orderDataTable.oApi._fnVisibleToColumnIndex(
+            $orderDataTable.fnSettings(), $orderDataTable.find('thead input[type=text]').index(this)));
+      });
+
+      $orderDataTable.addClass('datatable-columnfilter');
     }
+
+    $('.dataTables_filter input').prop('placeholder', 'Search...');
   }
 }();
 
