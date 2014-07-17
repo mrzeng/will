@@ -22,6 +22,14 @@
     </mvc:interceptor>
   </mvc:interceptors>
 
+  <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+    <property name="formatters">
+      <list>
+        <bean class="io.github.yanshuai.will.DateTimeRangeAnnotationFormatterFactory">
+        </bean>
+      </list>
+    </property>
+  </bean>
   <!-- bo: business object -->
   <bean id="orderBo" class="io.github.yanshuai.will.bo.OrderBo">
   </bean>
