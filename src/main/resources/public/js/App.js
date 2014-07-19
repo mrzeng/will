@@ -74,7 +74,7 @@ var App = function() {
           maxDate: moment()
         },
     function(start, end) {
-      $('#date-range span').html(start.format('MM/DD/YYYY') + ' ~ ' + end.format('MM/DD/YYYY'));
+      $('#date-range span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
     }
     );
   }
@@ -106,6 +106,7 @@ var App = function() {
     var $orderTable = $('#orderTable');
     var tableConfig = {};
     tableConfig.iDisplayLength = 10;
+    tableConfig.aLengthMenu = [[10, 25, 50, -1], [10, 25, 50, "所有"]];
     tableConfig.bFilter = true;
     tableConfig.bSort = true;
     tableConfig.bPaginate = true;
@@ -139,6 +140,8 @@ var App = function() {
         success: function(data) {
           if (!data.isError) {
             fnCallback(data.data);
+          } else {
+            
           }
         }
       });
@@ -167,6 +170,7 @@ var App = function() {
       });
     };
 
+    tableConfig.dom = 'C<"clear">lfrtip';
     tableConfig.aoColumns = [];
     $orderTable.find('thead tr th').each(function(index, value) {
       if (index === 0) {
