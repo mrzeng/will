@@ -170,7 +170,6 @@ var App = function() {
       });
     };
 
-    tableConfig.dom = 'C<"clear">lfrtip';
     tableConfig.aoColumns = [];
     $orderTable.find('thead tr th').each(function(index, value) {
       if (index === 0) {
@@ -182,6 +181,8 @@ var App = function() {
 
     // Create the datatable
     $orderDataTable = $orderTable.dataTable(tableConfig);
+    var colvis = new $.fn.dataTable.ColVis($orderDataTable);
+    $(colvis.button()).insertAfter('div.info');
     var filterableCols = $orderDataTable.find('thead th').filter('[data-filterable="true"]');
 
     if (filterableCols.length > 0) {
