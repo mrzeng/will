@@ -111,11 +111,12 @@ var App = function() {
     tableConfig.bPaginate = true;
     tableConfig.bLengthChange = true;
     tableConfig.bInfo = true;
-    tableConfig.bProcessing = false;
+    tableConfig.bProcessing = true;
     tableConfig.bStateSave = true;
     tableConfig.bServerSide = true;
     tableConfig.sAjaxSource = "api/orders";
     tableConfig.oLanguage = {
+      "sProcessing": "正在加载中  <img src='img/loading-bubbles.svg' />",
       "sLengthMenu": "每页显示 _MENU_ 条记录",
       "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
       "sInfoEmpty": "没有数据",
@@ -126,8 +127,7 @@ var App = function() {
         "sNext": "后一页",
         "sLast": "尾页"
       },
-      "sZeroRecords": "没有检索到数据",
-      "sProcessing": "<img src='./loading.gif' />"
+      "sZeroRecords": "没有检索到数据"
     };
 
     tableConfig.fnServerData = function(sSource, aoData, fnCallback) {
@@ -167,11 +167,13 @@ var App = function() {
       });
     };
 
-    tableConfig.aaSorting = [];
     tableConfig.aoColumns = [];
     $orderTable.find('thead tr th').each(function(index, value) {
+      if (index === 0) {
+        tableConfig.aoColumns.push({'bSortable': false});
+      } else {
         tableConfig.aoColumns.push({'bSortable': true});
-        tableConfig.aaSorting.push([index, 'asc']);
+      }
     });
 
     // Create the datatable

@@ -1262,7 +1262,7 @@ label {
 }
 /* @end */
 /* @group Retina compatibility */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144ddpx) {
   .chosen-rtl .chosen-search input[type="text"],
   .chosen-container-single .chosen-single abbr,
   .chosen-container-single .chosen-single div b,
@@ -2392,6 +2392,18 @@ html .fc,
 }
 .datatable-hidesearch .dataTables_filter {
   display: none;
+}
+.dataTables_processing {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 250px;
+  height: 30px;
+  margin-left: -125px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  background-color: white;
 }
 .dataTables_wrapper .row {
   margin-top: 0 !important;
