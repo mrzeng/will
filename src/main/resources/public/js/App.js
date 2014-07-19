@@ -129,6 +129,7 @@ var App = function() {
       "sZeroRecords": "没有检索到数据",
       "sProcessing": "<img src='./loading.gif' />"
     };
+
     tableConfig.fnServerData = function(sSource, aoData, fnCallback) {
       $.ajax({
         type: 'GET',
@@ -142,6 +143,7 @@ var App = function() {
         }
       });
     };
+
     tableConfig.fnRowCallback = function(nRow, aData, iDisplayIndex) {
       $('td:eq(0)', nRow).html('<input class="icheck-input" type="checkbox" value="' + aData[1] + '">');
       if ('Pending' === aData[3]) {
@@ -154,6 +156,7 @@ var App = function() {
           </a>');
       return nRow;
     };
+
     tableConfig.fnDrawCallback = function(oInstance, oSettings, json) {
       $('.icheck-input').iCheck({
         checkboxClass: 'icheckbox_minimal-blue',
@@ -166,14 +169,9 @@ var App = function() {
 
     tableConfig.aaSorting = [];
     tableConfig.aoColumns = [];
-
     $orderTable.find('thead tr th').each(function(index, value) {
-      var sortable = ($orderTable.data('sortable') === true) ? true : false;
-      tableConfig.aoColumns.push({'bSortable': sortable});
-
-      if ($orderTable.data('direction')) {
-        tableConfig.aaSorting.push([index, $(this).data('direction')]);
-      }
+        tableConfig.aoColumns.push({'bSortable': true});
+        tableConfig.aaSorting.push([index, 'asc']);
     });
 
     // Create the datatable

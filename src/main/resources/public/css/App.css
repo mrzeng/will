@@ -928,7 +928,7 @@ label {
   display: block;
   width: 12px;
   height: 12px;
-  background: url('../img/plugins/chosen/chosen-sprite.png') -42px 1px no-repeat;
+  background: url('../img/chosen/chosen-sprite.png') -42px 1px no-repeat;
   font-size: 1px;
 }
 .chosen-container-single .chosen-single abbr:hover {
@@ -949,7 +949,7 @@ label {
   display: block;
   width: 100%;
   height: 100%;
-  background: url('../js/plugins/chosen/chosen-sprite.png') no-repeat 0px 2px;
+  background: url('../js/chosen/chosen-sprite.png') no-repeat 0px 2px;
 }
 .chosen-container-single .chosen-search {
   position: relative;
@@ -1113,7 +1113,7 @@ label {
   display: block;
   width: 12px;
   height: 12px;
-  background: url('../img/plugins/chosen/chosen-sprite.png') -42px 1px no-repeat;
+  background: url('../img/chosen/chosen-sprite.png') -42px 1px no-repeat;
   font-size: 1px;
 }
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
@@ -1246,12 +1246,12 @@ label {
 }
 .chosen-rtl .chosen-search input[type="text"] {
   padding: 4px 5px 4px 20px;
-  background: #ffffff url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px;
-  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: url('../img/plugins/chosen/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: #ffffff url('../img/chosen/chosen-sprite.png') no-repeat -30px -20px;
+  background: url('../img/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background: url('../img/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('../img/chosen/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('../img/chosen/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('../img/chosen/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   direction: rtl;
 }
 .chosen-rtl.chosen-container-single .chosen-single div b {
@@ -2475,19 +2475,19 @@ table.table thead .sorting_desc_disabled {
   *cursor: hand;
 }
 table.table thead .sorting {
-  background: url('../img/plugins/datatables/img/sort_both.png') no-repeat center right;
+  background: url('../img/sort_both.png') no-repeat center right;
 }
 table.table thead .sorting_asc {
-  background: url('../img/plugins/datatables/img/sort_asc.png') no-repeat center right;
+  background: url('../img/sort_asc.png') no-repeat center right;
 }
 table.table thead .sorting_desc {
-  background: url('../img/plugins/datatables/img/sort_desc.png') no-repeat center right;
+  background: url('../img/sort_desc.png') no-repeat center right;
 }
 table.table thead .sorting_asc_disabled {
-  background: url('../img/plugins/datatables/img/sort_asc_disabled.png') no-repeat center right;
+  background: url('../img/sort_asc_disabled.png') no-repeat center right;
 }
 table.table thead .sorting_desc_disabled {
-  background: url('../img/plugins/datatables/img/sort_desc_disabled.png') no-repeat center right;
+  background: url('../img/sort_desc_disabled.png') no-repeat center right;
 }
 table.dataTable th:active {
   outline: none;
@@ -2744,9 +2744,11 @@ table.dataTable th:active {
 /* @Header */
 #site-logo {
   position: absolute;
-  top: 15px;
+  top: 10px;
   left: 15px;
   z-index: 21;
+  font-size: 20px;
+  color: #FFF;
 }
 #header {
   background: #222;
@@ -2757,7 +2759,7 @@ table.dataTable th:active {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3f3f3f', endColorstr='#ff222222', GradientType=0);
   width: 100%;
-  height: 77px;
+  height: 40px;
   border-bottom: 1px solid #000;
   position: relative;
   z-index: 15;
@@ -2794,8 +2796,7 @@ table.dataTable th:active {
   z-index: 20;
   width: 100%;
   height: 38px;
-  padding-right: 25px;
-  padding-left: 240px;
+  padding-right: 10px;
   color: #FFF;
 }
 #top-bar .nav > li {
@@ -2931,7 +2932,7 @@ table.dataTable th:active {
 /* ---------------------------------- */
 /* @main-nav */
 #main-nav {
-  width: 240px;
+  width: 200px;
   padding: 0;
   margin: 1.25em 0 2.5em;
   border-top: 1px solid #4A4A4A;
@@ -3055,7 +3056,7 @@ table.dataTable th:active {
 /* @Footer */
 #footer {
   width: 100%;
-  padding: 12px;
+  padding: 5px;
   color: #999;
   text-align: right;
   background: #222;
@@ -3092,11 +3093,11 @@ table.dataTable th:active {
 #content {
   background: #FFF;
   width: auto;
-  min-height: 800px;
+  min-height: 600px;
   z-index: 18;
   padding-bottom: 25px;
-  margin-left: 240px;
-  margin-right: 20px;
+  margin-left: 200px;
+  margin-right: 10px;
   position: relative;
   left: auto;
   top: auto;
@@ -3142,7 +3143,7 @@ table.dataTable th:active {
 }
 #content-container {
   position: relative;
-  top: -96px;
+  top: 20px;
   padding: 0 20px;
 }
 #content-container .portlet {
