@@ -8,8 +8,6 @@ var App = function() {
   function init() {
     initLayout();
     initDatePicker();
-
-    initTableCheckable();
     initOrderTable();
     initBackToTop();
   }
@@ -27,26 +25,9 @@ var App = function() {
     });
   }
 
-  function initTableCheckable() {
-    if ($.fn.tableCheckable) {
-      $('.table-checkable')
-          .tableCheckable()
-          .on('masterChecked', function(event, master, slaves) {
-            if ($.fn.iCheck) {
-              $(slaves).iCheck('update');
-            }
-          })
-          .on('slaveChecked', function(event, master, slave) {
-            if ($.fn.iCheck) {
-              $(master).iCheck('update');
-            }
-          });
-    }
-  }
-
   function initDatePicker() {
-    $('#date-range span').html(moment().subtract('days', 1).format('MM/DD/YYYY')
-        + ' ~ ' + moment().format('MM/DD/YYYY'));
+    $('#date-range span').html(moment().subtract('days', 1).format('YYYY/MM/DD')
+        + ' - ' + moment().format('YYYY/MM/DD'));
     $('#date-range').daterangepicker(
         {
           ranges: {
@@ -73,9 +54,9 @@ var App = function() {
           endDate: moment(),
           maxDate: moment()
         },
-    function(start, end) {
-      $('#date-range span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-    }
+        function(start, end) {
+          $('#date-range span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+        }
     );
   }
 
@@ -108,14 +89,12 @@ var App = function() {
     tableConfig.iDisplayLength = 10;
     tableConfig.aLengthMenu = [[10, 25, 50, -1], [10, 25, 50, "所有"]];
     tableConfig.bFilter = true;
-    tableConfig.bSort = true;
-    tableConfig.bPaginate = true;
-    tableConfig.bLengthChange = true;
-    tableConfig.bInfo = true;
+    tableConfig.bSortClasses = false;
     tableConfig.bProcessing = true;
     tableConfig.bStateSave = true;
     tableConfig.bServerSide = true;
     tableConfig.sAjaxSource = "api/orders";
+
     tableConfig.oLanguage = {
       "sProcessing": "正在加载中  <img src='img/loading-bubbles.svg' />",
       "sLengthMenu": "每页显示 _MENU_ 条记录",
@@ -149,6 +128,7 @@ var App = function() {
 
     tableConfig.fnRowCallback = function(nRow, aData, iDisplayIndex) {
       $('td:eq(0)', nRow).html('<input class="icheck-input" type="checkbox" value="' + aData[1] + '">');
+      $('td:eq(0)', nRow).attr('width', '20px');
       if ('Pending' === aData[3]) {
         $('td:eq(3)', nRow).html('<span class="label label-default">Pending</span>');
       } else if ('Approved' === aData[3]) {
@@ -160,7 +140,7 @@ var App = function() {
       return nRow;
     };
 
-    tableConfig.fnDrawCallback = function(oInstance, oSettings, json) {
+    tableConfig.fnDrawCallback = function() {
       $('.icheck-input').iCheck({
         checkboxClass: 'icheckbox_minimal-blue',
         radioClass: 'iradio_minimal-blue',
@@ -168,6 +148,7 @@ var App = function() {
       }).on('ifChanged', function(e) {
         $(e.currentTarget).trigger('change');
       });
+      $($orderDataTable.find('thead tr th:first')[0]).removeAttr('class');
     };
 
     tableConfig.aoColumns = [];
@@ -200,8 +181,6 @@ var App = function() {
         th += '</th>';
         $row.append(th);
       }
-
-      $row.find('th').removeClass('sorting sorting_disabled sorting_asc sorting_desc sorting_asc_disabled sorting_desc_disabled');
 
       $orderDataTable.find('thead input').keyup(function() {
         $orderDataTable.fnFilter(this.value, $orderDataTable.oApi._fnVisibleToColumnIndex(

@@ -591,13 +591,23 @@ fieldset[disabled] .btn-twitter.active {
 .label {
   font-weight: 600;
 }
-.table-condensed thead > tr > th,
-.table-condensed tbody > tr > th,
-.table-condensed tfoot > tr > th,
-.table-condensed thead > tr > td,
-.table-condensed tbody > tr > td,
-.table-condensed tfoot > tr > td {
-  font-weight: 600;
+.table {
+  border: 1px solid #eee;
+}
+.table thead > tr > th,
+.table thead > tr > td {
+  text-align: center;
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-bottom: 3px solid #aaa;
+}
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+  text-align: center;
+  border: 1px solid #eee;
 }
 .fileupload-preview {
   line-height: 0 !important;
@@ -2263,61 +2273,7 @@ html .fc,
   font-weight: 600;
   cursor: pointer;
 }
-.table-checkable .checkbox-column {
-  width: 40px;
-  text-align: center;
-  vertical-align: middle;
-}
-.table-checkable .checkbox-column input[type=text] {
-  display: none;
-}
-.table-checkable tbody > tr.checked > td {
-  background-color: #fdf3e4;
-}
-.simplecolorpicker.inline {
-  display: block;
-  height: auto;
-}
-.simplecolorpicker.icon {
-  display: block;
-  width: 100px;
-  height: 25px;
-  text-align: center;
-  border: 3px solid #222;
-}
-.simplecolorpicker.icon i {
-  visibility: hidden;
-  color: #FFF;
-}
-.simplecolorpicker span {
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  color: #FFF;
-  text-align: center;
-  border: 3px solid transparent;
-}
-.simplecolorpicker span i {
-  display: table-cell;
-  visibility: hidden;
-  vertical-align: middle;
-  width: 19px;
-  height: 19px;
-}
-.simplecolorpicker span i:active,
-.simplecolorpicker span i:focus {
-  outline: none;
-}
-.simplecolorpicker span:hover {
-  border-width: 3px;
-  outline: none;
-}
-.simplecolorpicker span.selected {
-  border-width: 3px;
-}
-.simplecolorpicker span.selected i {
-  visibility: visible !important;
-}
+
 .jqstooltip {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -2495,12 +2451,6 @@ table.table thead .sorting_asc {
 table.table thead .sorting_desc {
   background: url('../img/sort_desc.png') no-repeat center right;
 }
-table.table thead .sorting_asc_disabled {
-  background: url('../img/sort_asc_disabled.png') no-repeat center right;
-}
-table.table thead .sorting_desc_disabled {
-  background: url('../img/sort_desc_disabled.png') no-repeat center right;
-}
 table.dataTable th:active {
   outline: none;
 }
@@ -2511,63 +2461,6 @@ table.dataTable th:active {
   transition: height 0.2s;
   -webkit-transition: height 0.2s;
   -moz-transition: height 0.2s;
-}
-.datepicker table tr td.active:hover,
-.datepicker table tr td.active:hover:hover,
-.datepicker table tr td.active.disabled:hover,
-.datepicker table tr td.active.disabled:hover:hover,
-.datepicker table tr td.active:active,
-.datepicker table tr td.active:hover:active,
-.datepicker table tr td.active.disabled:active,
-.datepicker table tr td.active.disabled:hover:active,
-.datepicker table tr td.active.active,
-.datepicker table tr td.active:hover.active,
-.datepicker table tr td.active.disabled.active,
-.datepicker table tr td.active.disabled:hover.active,
-.datepicker table tr td.active.disabled,
-.datepicker table tr td.active:hover.disabled,
-.datepicker table tr td.active.disabled.disabled,
-.datepicker table tr td.active.disabled:hover.disabled,
-.datepicker table tr td.active[disabled],
-.datepicker table tr td.active:hover[disabled],
-.datepicker table tr td.active.disabled[disabled],
-.datepicker table tr td.active.disabled:hover[disabled] {
-  background-color: #e5412d;
-  background-image: none;
-}
-.datepicker table tr td span.active:hover,
-.datepicker table tr td span.active:hover:hover,
-.datepicker table tr td span.active.disabled:hover,
-.datepicker table tr td span.active.disabled:hover:hover,
-.datepicker table tr td span.active:active,
-.datepicker table tr td span.active:hover:active,
-.datepicker table tr td span.active.disabled:active,
-.datepicker table tr td span.active.disabled:hover:active,
-.datepicker table tr td span.active.active,
-.datepicker table tr td span.active:hover.active,
-.datepicker table tr td span.active.disabled.active,
-.datepicker table tr td span.active.disabled:hover.active,
-.datepicker table tr td span.active.disabled,
-.datepicker table tr td span.active:hover.disabled,
-.datepicker table tr td span.active.disabled.disabled,
-.datepicker table tr td span.active.disabled:hover.disabled,
-.datepicker table tr td span.active[disabled],
-.datepicker table tr td span.active:hover[disabled],
-.datepicker table tr td span.active.disabled[disabled],
-.datepicker table tr td span.active.disabled:hover[disabled] {
-  background-color: #e5412d;
-  background-image: none;
-}
-.datepicker-inline {
-  border: 1px solid #c0c0c0;
-  width: 215px;
-}
-.datepicker-dropdown:before,
-.datepicker-dropdown:after {
-  display: none;
-}
-.ui-datepicker .input-group-addon {
-  cursor: pointer;
 }
 .bootstrap-timepicker > .fa-clock-o {
   position: absolute;
