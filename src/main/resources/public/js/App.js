@@ -162,8 +162,6 @@ var App = function() {
 
     // Create the datatable
     $orderDataTable = $orderTable.dataTable(tableConfig);
-    var colvis = new $.fn.dataTable.ColVis($orderDataTable);
-    $(colvis.button()).insertAfter('div.info');
     var filterableCols = $orderDataTable.find('thead th').filter('[data-filterable="true"]');
 
     if (filterableCols.length > 0) {
