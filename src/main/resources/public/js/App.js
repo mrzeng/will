@@ -118,6 +118,13 @@ var App = function() {
         data: aoData,
         success: function(data) {
           if (!data.isError) {
+            $('.icheck-menu').iCheck({
+              checkboxClass: 'icheckbox_minimal-blue',
+              radioClass: 'iradio_minimal-blue',
+              inheritClass: true
+            }).on('ifChanged', function(e) {
+              $(e.currentTarget).trigger('change');
+            });
             fnCallback(data.data);
           } else {
             
