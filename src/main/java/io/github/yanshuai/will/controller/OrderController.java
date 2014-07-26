@@ -25,20 +25,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author yanshuai
  */
 @Controller
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/order")
 public class OrderController {
 
     @Autowired
     private OrderBo orderBo;
 
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    @RequestMapping(value = "title", method = RequestMethod.GET)
     @ResponseBody
-    public Result getOrders(@RequestParam("sEcho") int sEcho,
+    public Result getOrderTitle() {
+        try {
+            return new Result(orderBo.getOrderTitles());
+        } catch (Exception ex) {
+            LOG.error("Exception:", ex);
+            return new Result(true, String.valueOf(ex));
+        }
+    }
+
+    @RequestMapping(value = "data", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getOrderData(@RequestParam("sEcho") int sEcho,
             @RequestParam("iDisplayStart") int iDisplayStart,
             @RequestParam("iDisplayLength") int iDisplayLength,
             @RequestParam("iColumns") int iColumns) {
         try {
-            List<Order> orders = orderBo.getOrders();
+            List<Order> orders = orderBo.getOrderData();
             JDataTable dataTable = new JDataTable();
             dataTable.setSEcho(sEcho);
             dataTable.setITotalRecords(orders.size());

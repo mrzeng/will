@@ -2,14 +2,15 @@ var App = function() {
   "use strict";
 
   var $orderDataTable;
-  var $orderListToPrint;
+  var orderListToPrint;
 
   return {init: init};
 
   function init() {
     initLayout();
     initDatePicker();
-    initOrderTable();
+    initOrderTableTitle();
+    initOrderTableData();
     initBackToTop();
   }
 
@@ -61,30 +62,46 @@ var App = function() {
     );
   }
 
-  function initBackToTop() {
-    var backToTop = $('<a>', {id: 'back-to-top', href: '#top'});
-    backToTop.appendTo('body');
-
-    backToTop.hide();
-
-    $(window).scroll(function() {
-      if ($(this).scrollTop() > 150) {
-        backToTop.fadeIn();
-      } else {
-        backToTop.fadeOut();
+  function initOrderTableTitle() {
+    $.ajax({
+      type: 'GET',
+      url: 'api/order/title',
+      async: false,
+      success: function(data) {
+        if (!data.isError) {
+          var orderTitles = data.data;
+          var $menuDivider = $('#menu-divider');
+          var $orderTableHead = $('#orderTable thead tr');
+          for (var i = 0; i < orderTitles.length; ++i) {
+            var orderTitle = orderTitles[i];
+            if (orderTitle.id > 0) {
+              var li = '<li>';
+              li += '<input class="icheck-menu" type="checkbox" data-column-id="';
+              li += orderTitle.id;
+              li += '" checked>';
+              li += orderTitle.name;
+              li += '</li>';
+              $menuDivider.before(li);
+              var th = '<th>';
+              th += orderTitle.name;
+              th += '</th>';
+              $orderTableHead.append(th);
+            } else if (orderTitle.id < 0) {
+              var li = '<li>';
+              li += '<input class="icheck-menu" type="checkbox" data-column-id="';
+              li += orderTitle.id;
+              li += '" checked>';
+              li += orderTitle.name;
+              li += '</li>';
+              $menuDivider.after(li);
+            }
+          }
+        }
       }
-    });
-
-    backToTop.click(function(e) {
-      e.preventDefault();
-
-      $('body, html').animate({
-        scrollTop: 0
-      }, 600);
     });
   }
 
-  function initOrderTable() {
+  function initOrderTableData() {
     var $orderTable = $('#orderTable');
     var tableConfig = {};
     tableConfig.iDisplayLength = 10;
@@ -94,7 +111,7 @@ var App = function() {
     tableConfig.bProcessing = true;
     //tableConfig.bStateSave = true;
     tableConfig.bServerSide = true;
-    tableConfig.sAjaxSource = "api/orders";
+    tableConfig.sAjaxSource = "api/order/data";
 
     tableConfig.oLanguage = {
       "sProcessing": "正在加载中  <img src='img/loading-bubbles.svg' />",
@@ -166,7 +183,7 @@ var App = function() {
     tableConfig.aoColumns = [];
     $orderTable.find('thead tr th').each(function(index, val) {
       if (index === 0) {
-        tableConfig.aoColumns.push({'bSortable': false, 'sName': $(val).html()});
+        tableConfig.aoColumns.push({'bSortable': false, 'sName': 'uuid'});
       } else {
         tableConfig.aoColumns.push({'bSortable': true, 'sName': $(val).html()});
       }
@@ -201,6 +218,29 @@ var App = function() {
     }
 
     $('.dataTables_filter input').prop('placeholder', 'Search...');
+  }
+
+  function initBackToTop() {
+    var backToTop = $('<a>', {id: 'back-to-top', href: '#top'});
+    backToTop.appendTo('body');
+
+    backToTop.hide();
+
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 150) {
+        backToTop.fadeIn();
+      } else {
+        backToTop.fadeOut();
+      }
+    });
+
+    backToTop.click(function(e) {
+      e.preventDefault();
+
+      $('body, html').animate({
+        scrollTop: 0
+      }, 600);
+    });
   }
 }();
 

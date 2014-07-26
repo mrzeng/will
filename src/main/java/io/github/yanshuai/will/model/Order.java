@@ -6,6 +6,8 @@
 
 package io.github.yanshuai.will.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.github.yanshuai.will.annotation.Colvis;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +20,15 @@ public class Order {
     private int id;
     private Date date;
     private String status;
+    private String remarks;
 
+    @Colvis(0)
+    public int getUUID() {
+        return id;
+    }
+
+    @JsonProperty("订单编号")
+    @Colvis(1)
     public int getId() {
         return id;
     }
@@ -27,6 +37,8 @@ public class Order {
         this.id = id;
     }
 
+    @JsonProperty("订单日期")
+    @Colvis(2)
     public Date getDate() {
         return date;
     }
@@ -35,12 +47,24 @@ public class Order {
         this.date = date;
     }
 
+    @JsonProperty("订单状态")
+    @Colvis(3)
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @JsonProperty("备注")
+    @Colvis
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public String[] toJDataRow() {
