@@ -2,6 +2,8 @@ var App = function() {
   "use strict";
 
   var $orderDataTable;
+  var aoColumns;
+  var hideColumns;
   var orderListToPrint;
 
   return {init: init};
@@ -56,9 +58,9 @@ var App = function() {
           endDate: moment(),
           maxDate: moment()
         },
-        function(start, end) {
-          $('#date-range span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-        }
+    function(start, end) {
+      $('#date-range span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+    }
     );
   }
 
@@ -69,15 +71,18 @@ var App = function() {
       async: false,
       success: function(data) {
         if (!data.isError) {
+          aoColumns = [];
+          aoColumns.push({'bSortable': false, 'sName': 'uuid'});
+          hideColumns = [];
           var orderTitles = data.data;
           var $menuDivider = $('#menu-divider');
           var $orderTableHead = $('#orderTable thead tr');
-          for (var i = 0; i < orderTitles.length; ++i) {
+          for (var i = 1; i < orderTitles.length; ++i) {
             var orderTitle = orderTitles[i];
             if (orderTitle.id > 0) {
               var li = '<li>';
               li += '<input class="icheck-menu" type="checkbox" data-column-id="';
-              li += orderTitle.id;
+              li += i;
               li += '" checked disabled>';
               li += orderTitle.name;
               li += '</li>';
@@ -86,16 +91,35 @@ var App = function() {
               th += orderTitle.name;
               th += '</th>';
               $orderTableHead.append(th);
-            } else if (orderTitle.id < 0) {
+              aoColumns.push({'bSortable': true, 'sName': orderTitle.name});
+            } else {
               var li = '<li>';
               li += '<input class="icheck-menu" type="checkbox" data-column-id="';
-              li += orderTitle.id;
-              li += '" checked>';
+              li += i;
+              li += '">';
               li += orderTitle.name;
               li += '</li>';
               $menuDivider.after(li);
+              var th = '<th>';
+              th += orderTitle.name;
+              th += '</th>';
+              $orderTableHead.append(th);
+              aoColumns.push({'bSortable': true, 'sName': orderTitle.name});
+              hideColumns.push(i);
             }
           }
+
+          $('.icheck-menu').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue',
+            inheritClass: true
+          }).on('ifChecked', function(e) {
+            var id = $(e.target).attr('data-column-id');
+            $orderDataTable.fnSetColumnVis(id, true);
+          }).on('ifUnchecked', function(e) {
+            var id = $(e.target).attr('data-column-id');
+            $orderDataTable.fnSetColumnVis(id, false);
+          });
         }
       }
     });
@@ -109,7 +133,7 @@ var App = function() {
     tableConfig.bFilter = true;
     tableConfig.bSortClasses = false;
     tableConfig.bProcessing = true;
-    //tableConfig.bStateSave = true;
+    tableConfig.bStateSave = true;
     tableConfig.bServerSide = true;
     tableConfig.sAjaxSource = "api/order/data";
 
@@ -136,20 +160,9 @@ var App = function() {
         data: aoData,
         success: function(data) {
           if (!data.isError) {
-            $('.icheck-menu').iCheck({
-              checkboxClass: 'icheckbox_minimal-blue',
-              radioClass: 'iradio_minimal-blue',
-              inheritClass: true
-            }).on('ifChecked', function(e) {
-              var id = $(e.target).attr('data-column-id');
-              $orderDataTable.fnSetColumnVis(id, true);
-            }).on('ifUnchecked', function(e) {
-              var id = $(e.target).attr('data-column-id');
-              $orderDataTable.fnSetColumnVis(id, false);
-            });
             fnCallback(data.data);
           } else {
-            
+
           }
         }
       });
@@ -177,14 +190,9 @@ var App = function() {
       $($orderDataTable.find('thead tr th:first')[0]).removeAttr('class');
     };
 
-    tableConfig.aoColumns = [];
-    $orderTable.find('thead tr th').each(function(index, val) {
-      if (index === 0) {
-        tableConfig.aoColumns.push({'bSortable': false, 'sName': 'uuid'});
-      } else {
-        tableConfig.aoColumns.push({'bSortable': true, 'sName': $(val).html()});
-      }
-    });
+    tableConfig.aoColumns = aoColumns;
+    tableConfig.aoColumnDefs = [];
+    tableConfig.aoColumnDefs.push({"bVisible": false, "aTargets": hideColumns});
 
     // Create the datatable
     $orderDataTable = $orderTable.dataTable(tableConfig);
