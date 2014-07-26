@@ -35,7 +35,8 @@ public class OrderController {
     @ResponseBody
     public Result getOrders(@RequestParam("sEcho") int sEcho,
             @RequestParam("iDisplayStart") int iDisplayStart,
-            @RequestParam("iDisplayLength") int iDisplayLength) {
+            @RequestParam("iDisplayLength") int iDisplayLength,
+            @RequestParam("iColumns") int iColumns) {
         try {
             List<Order> orders = orderBo.getOrders();
             JDataTable dataTable = new JDataTable();

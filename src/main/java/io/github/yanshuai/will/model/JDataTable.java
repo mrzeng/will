@@ -16,6 +16,7 @@ public class JDataTable {
     private int sEcho;
     private int iTotalRecords;
     private int iTotalDisplayRecords;
+    private String[] columnNames;
     private String[][] aaData;
 
     public void setSEcho(int sEcho) {
@@ -38,6 +39,14 @@ public class JDataTable {
 
     public void setITotalDisplayRecords(int iTotalDisplayRecords) {
         this.iTotalDisplayRecords = iTotalDisplayRecords;
+    }
+
+    public String[] getColumnNames() {
+        return columnNames;
+    }
+
+    public void setColumnNames(String[] columnNames) {
+        this.columnNames = columnNames;
     }
 
     @JsonProperty("iTotalDisplayRecords")

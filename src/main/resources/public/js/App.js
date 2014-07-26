@@ -2,6 +2,7 @@ var App = function() {
   "use strict";
 
   var $orderDataTable;
+  var $orderListToPrint;
 
   return {init: init};
 
@@ -91,7 +92,7 @@ var App = function() {
     tableConfig.bFilter = true;
     tableConfig.bSortClasses = false;
     tableConfig.bProcessing = true;
-    tableConfig.bStateSave = true;
+    //tableConfig.bStateSave = true;
     tableConfig.bServerSide = true;
     tableConfig.sAjaxSource = "api/orders";
 
@@ -122,8 +123,12 @@ var App = function() {
               checkboxClass: 'icheckbox_minimal-blue',
               radioClass: 'iradio_minimal-blue',
               inheritClass: true
-            }).on('ifChanged', function(e) {
-              $(e.currentTarget).trigger('change');
+            }).on('ifChecked', function(e) {
+              var id = $(e.target).attr('data-column-id');
+              $orderDataTable.fnSetColumnVis(id, true);
+            }).on('ifUnchecked', function(e) {
+              var id = $(e.target).attr('data-column-id');
+              $orderDataTable.fnSetColumnVis(id, false);
             });
             fnCallback(data.data);
           } else {
@@ -159,11 +164,11 @@ var App = function() {
     };
 
     tableConfig.aoColumns = [];
-    $orderTable.find('thead tr th').each(function(index, value) {
+    $orderTable.find('thead tr th').each(function(index, val) {
       if (index === 0) {
-        tableConfig.aoColumns.push({'bSortable': false});
+        tableConfig.aoColumns.push({'bSortable': false, 'sName': $(val).html()});
       } else {
-        tableConfig.aoColumns.push({'bSortable': true});
+        tableConfig.aoColumns.push({'bSortable': true, 'sName': $(val).html()});
       }
     });
 
