@@ -78,7 +78,7 @@ var App = function() {
               var li = '<li>';
               li += '<input class="icheck-menu" type="checkbox" data-column-id="';
               li += orderTitle.id;
-              li += '" checked>';
+              li += '" checked disabled>';
               li += orderTitle.name;
               li += '</li>';
               $menuDivider.before(li);
@@ -163,9 +163,6 @@ var App = function() {
       } else if ('Approved' === aData[3]) {
         $('td:eq(3)', nRow).html('<span class="label label-success">Approved</span>');
       }
-      $('td:eq(4)', nRow).html('<a href="javascript:void(0);" class="btn btn-xs btn-primary" data-original-title="Approve">\
-            <i class="fa fa-check"></i>\
-          </a>');
       return nRow;
     };
 
