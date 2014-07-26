@@ -130,10 +130,10 @@ var App = function() {
     var tableConfig = {};
     tableConfig.iDisplayLength = 10;
     tableConfig.aLengthMenu = [[10, 25, 50, -1], [10, 25, 50, "所有"]];
-    tableConfig.bFilter = true;
+    tableConfig.bFilter = false;
     tableConfig.bSortClasses = false;
     tableConfig.bProcessing = true;
-    tableConfig.bStateSave = true;
+    tableConfig.bStateSave = false;
     tableConfig.bServerSide = true;
     tableConfig.sAjaxSource = "api/order/data";
 
@@ -196,33 +196,6 @@ var App = function() {
 
     // Create the datatable
     $orderDataTable = $orderTable.dataTable(tableConfig);
-    var filterableCols = $orderDataTable.find('thead th').filter('[data-filterable="true"]');
-
-    if (filterableCols.length > 0) {
-      var columns = $orderDataTable.fnSettings().aoColumns,
-          $row, th, $col, showFilter;
-
-      $row = $('<tr>', {cls: 'dataTable-filter-row'}).appendTo($orderDataTable.find('thead'));
-
-      for (var i = 0; i < columns.length; i++) {
-        $col = $(columns[i].nTh.outerHTML);
-        showFilter = ($col.data('filterable') === true) ? 'show' : 'hide';
-
-        th = '<th class="' + $col.prop('class') + '">';
-        th += '<input type="text" class="form-control input-sm ' + showFilter + '" placeholder="' + $col.text() + '">';
-        th += '</th>';
-        $row.append(th);
-      }
-
-      $orderDataTable.find('thead input').keyup(function() {
-        $orderDataTable.fnFilter(this.value, $orderDataTable.oApi._fnVisibleToColumnIndex(
-            $orderDataTable.fnSettings(), $orderDataTable.find('thead input[type=text]').index(this)));
-      });
-
-      $orderDataTable.addClass('datatable-columnfilter');
-    }
-
-    $('.dataTables_filter input').prop('placeholder', 'Search...');
   }
 
   function initBackToTop() {
