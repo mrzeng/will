@@ -32,6 +32,24 @@ var App = function() {
     $('body').on('click', '#btn-filter', function() {
       $('#modal-filter').modal('show');
     });
+
+    $('body').on('click', '#btn-add-filter', function() {
+      var $filterRuleTmpl = $('#filter-rule-template');
+      var filterRule = $filterRuleTmpl.clone(true);
+      filterRule.removeAttr('id');
+      filterRule.removeAttr('class');
+      var $filterRules = $filterRuleTmpl.parent();
+      $filterRules.append(filterRule);
+    });
+
+    $('body').on('click', '#filter-remove', function() {
+      $(this).parent().parent().parent().remove();
+    });
+
+    $('body').on('mouseover', '[data-toggle="tooltip"]', function() {
+      this.style.cursor = 'pointer';
+      $(this).tooltip('show');
+    });
   }
 
   function initDatePicker() {

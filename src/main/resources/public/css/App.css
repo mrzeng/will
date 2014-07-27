@@ -2052,11 +2052,17 @@ ul.support-list li {
 #btn-filter,
 #btn-refresh,
 #btn-print {
-  border-color: #fff;
+  border: none !important;
+}
+
+#btn-add-filter {
+  border: none !important;
+  margin-top: 8px;
+  font-size: 13px;
 }
 
 .filter-val {
-  min-height: 18px;
+  height: 20px;
   padding-left: 0px;
   color: #333333 !important;
   border: none !important;
@@ -2072,4 +2078,12 @@ ul.support-list li {
   border-bottom: solid thin #cccccc !important;
   outline: none !important;
   width: 80%;
+}
+
+.modal-footer {
+  border: none !important;
+}
+
+.filter-rule {
+  margin-bottom: 5px;
 }

@@ -325,7 +325,7 @@
               <div class="portlet">
                 <div class="portlet-header">
                   <h3>
-                    <i class="fa fa-group"></i>
+                    <i class="fa fa-table"></i>
                     &#x8ba2;&#x5355;
                   </h3>
                   <ul class="portlet-tools pull-right">
@@ -400,12 +400,22 @@
 
     <div class="modal fade" id="modal-filter" role="dialog" aria-hidden="true">
       <div class="modal-header">
-        <span>&#x6dfb;&#x52a0;&#x8fc7;&#x6ee4;&#x7b56;&#x7565;</span>
+        <div class="row">
+          <div class="col-md-10">
+            <h4>&#x8fc7;&#x6ee4;&#x7b56;&#x7565;</h4>
+          </div>
+          <div class="col-md-2">
+            <button id="btn-add-filter" class="btn btn-default pull-right">
+              <i class="fa fa-plus-circle"></i>
+              <span>&#x6dfb;&#x52a0;</span>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
         <div>
           <ul id="filter-rules" class="nav">
-            <li id="filter-rule-template">
+            <li id="filter-rule-template" class="hide filter-rule">
               <div class="row">
                 <div class="col-md-4">
                   <select class="selectbox filter-field">
@@ -413,17 +423,24 @@
                 </div>
                 <div class="col-md-3">
                   <select class="selectbox filter-oprt">
-                    <option value="=">&#x7b49;&#x4e8e;</option>
-                    <option value="!=">&#x4e0d;&#x7b49;&#x4e8e;</option>
-                    <option value=">">&#x5927;&#x4e8e;</option>
-                    <option value=">=">&#x4e0d;&#x5c0f;&#x4e8e;</option>
-                    <option value="<">&#x5c0f;&#x4e8e;</option>
-                    <option value="<=">&#x4e0d;&#x5927;&#x4e8e;</option>
-                    <option value="like">&#x5305;&#x542b;</option>
+                    <option value="k = v">&#x7b49;&#x4e8e;</option>
+                    <option value="k != v">&#x4e0d;&#x7b49;&#x4e8e;</option>
+                    <option value="k > v">&#x5927;&#x4e8e;</option>
+                    <option value="k >= v">&#x4e0d;&#x5c0f;&#x4e8e;</option>
+                    <option value="k < v">&#x5c0f;&#x4e8e;</option>
+                    <option value="k <= v">&#x4e0d;&#x5927;&#x4e8e;</option>
+                    <option value="k like %v%">&#x5305;&#x542b;</option>
+                    <option value="k like v%">&#x5f00;&#x5934;&#x4ee5;</option>
+                    <option value="k like %v">&#x7ed3;&#x5c3e;&#x4ee5;</option>
                   </select>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                   <input type="text" class="filter-val" placeholder="&#x503c;...">
+                </div>
+                <div class="col-md-1">
+                  <span class="fa fa-times" id="filter-remove" data-placement="left" data-toggle="tooltip"
+                    data-trigger="hover" data-original-title="移除过滤规则">
+                  </span>
                 </div>
               </div>
             </li>
