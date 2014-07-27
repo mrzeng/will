@@ -403,7 +403,32 @@
         <span>&#x6dfb;&#x52a0;&#x8fc7;&#x6ee4;&#x7b56;&#x7565;</span>
       </div>
       <div class="modal-body">
-        <span>haha</span>
+        <div>
+          <ul id="filter-rules" class="nav">
+            <li id="filter-rule-template">
+              <div class="row">
+                <div class="col-md-4">
+                  <select class="selectbox filter-field">
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select class="selectbox filter-oprt">
+                    <option value="=">&#x7b49;&#x4e8e;</option>
+                    <option value="!=">&#x4e0d;&#x7b49;&#x4e8e;</option>
+                    <option value=">">&#x5927;&#x4e8e;</option>
+                    <option value=">=">&#x4e0d;&#x5c0f;&#x4e8e;</option>
+                    <option value="<">&#x5c0f;&#x4e8e;</option>
+                    <option value="<=">&#x4e0d;&#x5927;&#x4e8e;</option>
+                    <option value="like">&#x5305;&#x542b;</option>
+                  </select>
+                </div>
+                <div class="col-md-5">
+                  <input type="text" class="filter-val" placeholder="&#x503c;...">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-warning" data-dismiss="modal">

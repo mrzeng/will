@@ -12,6 +12,7 @@ var App = function() {
     initLayout();
     initDatePicker();
     initOrderTableTitle();
+    initFilterRuleTmpl();
     initOrderTableData();
     initBackToTop();
   }
@@ -127,6 +128,16 @@ var App = function() {
         }
       }
     });
+  }
+
+  function initFilterRuleTmpl() {
+    var $filterField = $('#filter-rule-template').find('.filter-field');
+    for (var i = 1; i < aoColumns.length; ++i) {
+      var opt = '<option>';
+      opt += aoColumns[i].sName;
+      opt += '</option>';
+      $filterField.append(opt);
+    }
   }
 
   function initOrderTableData() {
