@@ -27,6 +27,10 @@ var App = function() {
       $orderDataTable.fnClearTable(0);
       $orderDataTable.fnDraw();
     });
+
+    $('body').on('click', '#btn-filter', function() {
+      $('#modal-filter').modal('show');
+    });
   }
 
   function initDatePicker() {
@@ -130,7 +134,7 @@ var App = function() {
     var tableConfig = {};
     tableConfig.iDisplayLength = 10;
     tableConfig.aLengthMenu = [[10, 25, 50, -1], [10, 25, 50, "所有"]];
-    tableConfig.bFilter = false;
+    tableConfig.bFilter = true;
     tableConfig.bSortClasses = false;
     tableConfig.bProcessing = true;
     tableConfig.bStateSave = false;
@@ -196,6 +200,7 @@ var App = function() {
 
     // Create the datatable
     $orderDataTable = $orderTable.dataTable(tableConfig);
+    $('.dataTables_filter input').prop('placeholder', '过滤表达式...');
   }
 
   function initBackToTop() {
