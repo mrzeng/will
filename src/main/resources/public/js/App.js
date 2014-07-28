@@ -48,7 +48,29 @@ var App = function() {
 
     $('body').on('mouseover', '[data-toggle="tooltip"]', function() {
       this.style.cursor = 'pointer';
-      $(this).tooltip('show');
+      $(this).attr('class', 'fa fa-times-circle');
+    });
+
+    $('body').on('focus', '.dataTables_filter input', function() {
+      $('#modal-filter').modal('show');
+    });
+    
+    $('#btn-sure').on('click', function() {
+      var $filterRules = $('#filter-rules');
+      var filterRuleList = $filterRules.children(':not(#filter-rule-template)');
+      var expression = '';
+      for (var i = 0; i < filterRuleList.length; ++i) {
+        if (0 !== i) {
+          expression += ' AND ';
+        }
+        var filterRuleDom = filterRuleList[i];
+        var key = $(filterRuleDom).find('.filter-field').val();
+        var op = $(filterRuleDom).find('.filter-oprt').val();
+        var val = $(filterRuleDom).find('.filter-val').val();
+        var stmt = op.replace(/\{0\}/, key).replace(/\{1\}/, val);
+        expression += stmt;
+      }
+      $('.dataTables_filter input').val(expression);
     });
   }
 
