@@ -20,20 +20,16 @@ var App = function() {
   function initLayout() {
     Nav.init();
 
-    $('body').on('touchstart.dropdown', '.dropdown-menu', function(e) {
-      e.stopPropagation();
-    });
-
-    $('body').on('click', '#btn-refresh', function(e) {
+    $('#btn-refresh').on('click', function(e) {
       $orderDataTable.fnClearTable(0);
       $orderDataTable.fnDraw();
     });
 
-    $('body').on('click', '#btn-filter', function() {
+    $('#btn-filter').on('click', function() {
       $('#modal-filter').modal('show');
     });
 
-    $('body').on('click', '#btn-add-filter', function() {
+    $('#btn-add-filter').on('click', function() {
       var $filterRuleTmpl = $('#filter-rule-template');
       var filterRule = $filterRuleTmpl.clone(true);
       filterRule.removeAttr('id');
@@ -42,17 +38,13 @@ var App = function() {
       $filterRules.append(filterRule);
     });
 
-    $('body').on('click', '#filter-remove', function() {
+    $('.filter-remove').on('click', function() {
       $(this).parent().parent().parent().remove();
-    });
-
-    $('body').on('mouseover', '[data-toggle="tooltip"]', function() {
+    }).on('mouseenter', function() {
       this.style.cursor = 'pointer';
       $(this).attr('class', 'fa fa-times-circle');
-    });
-
-    $('body').on('focus', '.dataTables_filter input', function() {
-      $('#modal-filter').modal('show');
+    }).on('mouseleave', function() {
+      $(this).attr('class', 'fa fa-times');
     });
     
     $('#btn-sure').on('click', function() {
