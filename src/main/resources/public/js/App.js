@@ -4,7 +4,7 @@ var App = function() {
   var $orderDataTable;
   var aoColumns;
   var hideColumns;
-  var orderListToPrint;
+  var ordersToPrint;
 
   return {init: init};
 
@@ -20,6 +20,7 @@ var App = function() {
   function initLayout() {
     Nav.init();
 
+    ordersToPrint = [];
     $('#btn-refresh').on('click', function(e) {
       $orderDataTable.fnClearTable(0);
       $orderDataTable.fnDraw();
@@ -157,6 +158,16 @@ var App = function() {
             var id = $(e.target).attr('data-column-id');
             $orderDataTable.fnSetColumnVis(id, false);
           });
+
+          $('#icheck-all').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue',
+            inheritClass: true
+          }).on('ifChecked', function(e) {
+            $('.icheck-input').iCheck('check');
+          }).on('ifUnchecked', function(e) {
+            $('.icheck-input').iCheck('uncheck');
+          });
         }
       }
     });
@@ -231,8 +242,10 @@ var App = function() {
         checkboxClass: 'icheckbox_minimal-blue',
         radioClass: 'iradio_minimal-blue',
         inheritClass: true
-      }).on('ifChanged', function(e) {
-        $(e.currentTarget).trigger('change');
+      }).on('ifChecked', function(e) {
+        ordersToPrint.push($(e.currentTarget).val());
+      }).on('ifUnchecked', function(e) {
+        $('#iCheck-all').iCheck('uncheck');
       });
       $($orderDataTable.find('thead tr th:first')[0]).removeAttr('class');
     };
