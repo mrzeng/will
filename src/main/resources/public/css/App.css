@@ -2091,3 +2091,7 @@ ul.support-list li {
 #orderTable_processing span {
   margin-left: 5px;
 }
+
+.btn-default:hover {
+  background-color: inherit;
+}
