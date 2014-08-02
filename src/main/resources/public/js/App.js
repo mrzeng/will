@@ -178,11 +178,13 @@ var App = function() {
 
   function initFilterRuleTmpl() {
     var $filterField = $('#filter-rule-template').find('.filter-field');
-    for (var i = 1; i < aoColumns.length; ++i) {
-      var opt = '<option>';
-      opt += aoColumns[i].sName;
-      opt += '</option>';
-      $filterField.append(opt);
+    if (aoColumns) {
+      for (var i = 1; i < aoColumns.length; ++i) {
+        var opt = '<option>';
+        opt += aoColumns[i].sName;
+        opt += '</option>';
+        $filterField.append(opt);
+      }
     }
   }
 
@@ -199,7 +201,7 @@ var App = function() {
     tableConfig.sAjaxSource = "api/order/data";
 
     tableConfig.oLanguage = {
-      "sProcessing": "<i class='fa fa-spinner fa-spin'></i>正在加载中<img src='img/loading-bubbles.svg' />",
+      "sProcessing": "<i class='fa fa-spinner fa-spin'></i><span>正在努力加载中...</span>",
       "sLengthMenu": "每页显示 _MENU_ 条记录",
       "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
       "sInfoEmpty": "没有数据",
@@ -257,7 +259,9 @@ var App = function() {
       $($orderDataTable.find('thead tr th:first')[0]).removeAttr('class');
     };
 
-    tableConfig.aoColumns = aoColumns;
+    if (aoColumns) {
+      tableConfig.aoColumns = aoColumns;
+    }
     tableConfig.aoColumnDefs = [];
     tableConfig.aoColumnDefs.push({"bVisible": false, "aTargets": hideColumns});
 

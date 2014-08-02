@@ -2087,3 +2087,7 @@ ul.support-list li {
 .filter-rule {
   margin-bottom: 5px;
 }
+
+#orderTable_processing span {
+  margin-left: 5px;
+}
