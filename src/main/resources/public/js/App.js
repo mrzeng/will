@@ -65,6 +65,19 @@ var App = function() {
       }
       $('.dataTables_filter input').val(expression);
     });
+
+    $('#icheck-all').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue',
+      inheritClass: true
+    }).on('ifChecked', function(e) {
+      $('input.icheck-input:not(:checked)').iCheck('check');
+    }).on('ifUnchecked', function(e) {
+      var $notChecked = $('input.icheck-input:not(:checked)');
+      if (0 === $notChecked.length) {
+        $('input.icheck-input').iCheck('uncheck');
+      }
+    });
   }
 
   function initDatePicker() {
@@ -158,16 +171,6 @@ var App = function() {
             var id = $(e.target).attr('data-column-id');
             $orderDataTable.fnSetColumnVis(id, false);
           });
-
-          $('#icheck-all').iCheck({
-            checkboxClass: 'icheckbox_minimal-blue',
-            radioClass: 'iradio_minimal-blue',
-            inheritClass: true
-          }).on('ifChecked', function(e) {
-            $('.icheck-input').iCheck('check');
-          }).on('ifUnchecked', function(e) {
-            $('.icheck-input').iCheck('uncheck');
-          });
         }
       }
     });
@@ -196,7 +199,7 @@ var App = function() {
     tableConfig.sAjaxSource = "api/order/data";
 
     tableConfig.oLanguage = {
-      "sProcessing": "正在加载中  <img src='img/loading-bubbles.svg' />",
+      "sProcessing": "<i class='fa fa-spinner fa-spin'></i>正在加载中<img src='img/loading-bubbles.svg' />",
       "sLengthMenu": "每页显示 _MENU_ 条记录",
       "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
       "sInfoEmpty": "没有数据",
@@ -238,14 +241,18 @@ var App = function() {
     };
 
     tableConfig.fnDrawCallback = function() {
-      $('.icheck-input').iCheck({
+      $('input.icheck-input').iCheck({
         checkboxClass: 'icheckbox_minimal-blue',
         radioClass: 'iradio_minimal-blue',
         inheritClass: true
       }).on('ifChecked', function(e) {
+        var $notChecked = $('input.icheck-input:not(:checked)');
+        if (0 === $notChecked.length) {
+          $('#icheck-all').iCheck('check');
+        }
         ordersToPrint.push($(e.currentTarget).val());
       }).on('ifUnchecked', function(e) {
-        $('#iCheck-all').iCheck('uncheck');
+        $('#icheck-all').iCheck('uncheck');
       });
       $($orderDataTable.find('thead tr th:first')[0]).removeAttr('class');
     };
