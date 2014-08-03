@@ -7,8 +7,8 @@
 package io.github.yanshuai.will.controller;
 
 import io.github.yanshuai.will.bo.OrderBo;
-import io.github.yanshuai.will.model.DateTimeRange;
-import io.github.yanshuai.will.model.DateTimeRangeFormat;
+import io.github.yanshuai.will.model.JDateRange;
+import io.github.yanshuai.will.annotation.DateRange;
 import io.github.yanshuai.will.model.JDataTable;
 import io.github.yanshuai.will.model.Order;
 import io.github.yanshuai.will.model.Result;
@@ -54,13 +54,16 @@ public class OrderController {
             @RequestParam("sSearch") String sSearch,
             @RequestParam("iSortCol_0") int sortCol,
             @RequestParam("sSortDir_0") String sortDir,
-            @DateTimeRangeFormat @RequestParam("dateRange") DateTimeRange dateRange) {
+            @RequestParam("dateRange") @DateRange JDateRange dateRange) {
         try {
             List<Order> orders = orderBo.getOrderData();
             JDataTable dataTable = new JDataTable();
             dataTable.setSEcho(sEcho);
             dataTable.setITotalRecords(orders.size());
             dataTable.setITotalDisplayRecords(orders.size());
+            if (0 >= iDisplayLength) {
+                iDisplayLength = orders.size();
+            }
             String[][] data = new String[iDisplayLength][3];
             for (int i = 0; i < iDisplayLength; ++i) {
                 Order order = orders.get(iDisplayStart + i);

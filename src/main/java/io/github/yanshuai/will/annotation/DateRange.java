@@ -1,4 +1,4 @@
-package io.github.yanshuai.will.model;
+package io.github.yanshuai.will.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DateTimeRangeFormat {
+public @interface DateRange {
 
     public String pattern() default "yyyy/MM/dd";
     public String delimiter() default " - ";
