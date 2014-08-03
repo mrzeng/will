@@ -23,6 +23,12 @@
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
     </dependency>
+    <!-- mapdb -->
+    <dependency>
+      <groupId>org.mapdb</groupId>
+      <artifactId>mapdb</artifactId>
+      <version>1.0.5</version>
+    </dependency>
     <!-- jackson -->
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
