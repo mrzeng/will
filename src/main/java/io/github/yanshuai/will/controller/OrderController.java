@@ -77,5 +77,19 @@ public class OrderController {
         }
     }
 
+    @RequestMapping(value = "print", method = RequestMethod.POST)
+    @ResponseBody
+    public Result printOrders(@RequestParam("orders") String[] orders) {
+        try {
+            for (String order : orders) {
+                orderBo.print(order);
+            }
+            return new Result(orders);
+        } catch (Exception ex) {
+            LOG.error("Exception:", ex);
+            return new Result(true, String.valueOf(ex));
+        }
+    }
+
     private static final Logger LOG = LoggerFactory.getLogger(OrderController.class);
 }

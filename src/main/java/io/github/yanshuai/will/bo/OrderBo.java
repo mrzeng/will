@@ -74,4 +74,8 @@ public class OrderBo {
         }
         return orderDao.getOrders();
     }
+
+    public void print(String order) {
+        
+    }
 }

@@ -25,7 +25,24 @@ var App = function() {
     });
 
     $('#btn-print').on('click', function(e) {
-      alert($('input.icheck-input:checked').val());
+      var $ordersToPrint = $('input.icheck-input:checked');
+      var ordersToPrint = '';
+      for (var i = 0; i < $ordersToPrint.length; ++i) {
+        if (ordersToPrint.length > 0) {
+          ordersToPrint += ',';
+        }
+        ordersToPrint += $($ordersToPrint[i]).val();
+      }
+      var inData = {};
+      inData.orders = ordersToPrint;
+      $.ajax({
+        type: 'POST',
+        url: 'api/order/print',
+        data: inData,
+        success: function(data) {
+          
+        }
+      });
     });
 
     $('#btn-filter').on('click', function() {
