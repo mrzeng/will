@@ -4,7 +4,6 @@ var App = function() {
   var $orderDataTable;
   var aoColumns;
   var hideColumns;
-  var ordersToPrint;
 
   return {init: init};
 
@@ -20,10 +19,13 @@ var App = function() {
   function initLayout() {
     Nav.init();
 
-    ordersToPrint = [];
     $('#btn-refresh').on('click', function(e) {
       $orderDataTable.fnClearTable(0);
       $orderDataTable.fnDraw();
+    });
+
+    $('#btn-print').on('click', function(e) {
+      alert($('input.icheck-input:checked').val());
     });
 
     $('#btn-filter').on('click', function() {
@@ -107,7 +109,8 @@ var App = function() {
           },
           startDate: moment().subtract('days', 1),
           endDate: moment(),
-          maxDate: moment()
+          maxDate: moment(),
+          minDate: moment().subtract('days', 60)
         },
     function(start, end) {
       $('#date-range span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
@@ -216,6 +219,11 @@ var App = function() {
     };
 
     tableConfig.fnServerData = function(sSource, aoData, fnCallback) {
+      var dateRange = {
+        "name": "dateRange",
+        "value": $('#date-range span').html()
+      };
+      aoData.push(dateRange);
       $.ajax({
         type: 'GET',
         url: sSource,
@@ -252,7 +260,6 @@ var App = function() {
         if (0 === $notChecked.length) {
           $('#icheck-all').iCheck('check');
         }
-        ordersToPrint.push($(e.currentTarget).val());
       }).on('ifUnchecked', function(e) {
         $('#icheck-all').iCheck('uncheck');
       });
