@@ -2095,3 +2095,7 @@ ul.support-list li {
 .btn-default:hover {
   background-color: inherit;
 }
+
+#menu li:not(.divider):hover {
+  cursor: pointer;
+}
